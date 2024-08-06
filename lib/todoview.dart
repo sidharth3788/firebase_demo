@@ -16,57 +16,71 @@ class _MyTODOviewState extends State<MyTODOview> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: StreamBuilder<QuerySnapshot>(
-                stream: _todoController.userStream,
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return Center(child: Text('Error: ${snapshot.error}'));
-                  }
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: _todoController.userStream,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(child: Text('Error: ${snapshot.error}'));
+                    }
 
-                  final todos = snapshot.data?.docs ?? [];
-                  if (todos.isEmpty) {
-                    return const Center(child: Text('No todos available'));
-                  }
+                    final todos = snapshot.data?.docs ?? [];
+                    if (todos.isEmpty) {
+                      return const Center(child: Text('No todos available'));
+                    }
 
-                  return ListView.builder(
-                    itemCount: todos.length,
-                    itemBuilder: (context, index) {
-                      final todo = todos[index];
-                      final todoText = todo['data'] ?? 'No data';
-                      return ListTile(
-                        title: Text(todoText),
-                      );
-                    },
-                  );
-                },
+                    return ListView.separated(
+                      itemCount: todos.length,
+                      itemBuilder: (context, index) {
+                        final todo = todos[index];
+                        final todoText = todo['data'] ?? 'No data';
+                        return ListTile(
+                          contentPadding: const EdgeInsets.all(16.0),
+                          title: Text(todoText),
+                          trailing: IconButton(
+                            icon: const Icon(Icons.delete),
+                            onPressed: () {
+                              _todoController.deleteUser(todo.id);
+                            },
+                          ),
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return const Divider();
+                      },
+                    );
+                  },
+                ),
               ),
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: TextFormField(
-                    controller: _todoController.titleTEC,
-                    decoration: const InputDecoration(
-                      hintText: 'Enter your todo',
-                      border: OutlineInputBorder(),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      controller: _todoController.titleTEC,
+                      decoration: const InputDecoration(
+                        hintText: 'Enter your Text here...',
+                        border: OutlineInputBorder(),
+                      ),
                     ),
                   ),
-                ),
-                IconButton(
-                  onPressed: () {
-                    setState(() {
-                      _todoController.addUser();
-                    });
-                  },
-                  icon: const Icon(Icons.add),
-                ),
-              ],
-            ),
-          ],
+                  IconButton(
+                    color: Colors.blue,
+                    onPressed: () {
+                      setState(() {
+                        _todoController.addUser();
+                      });
+                    },
+                    icon: const Icon(Icons.add),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

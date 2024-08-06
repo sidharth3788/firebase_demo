@@ -11,8 +11,12 @@ class TodoController {
     todos.add({'data': titleTEC.text});
     titleTEC.clear();
   }
+
+  void deleteUser(String id) {
+    todos.doc(id).delete().then((_) {
+      print('Todo deleted');
+    }).catchError((error) {
+      print('Failed to delete todo: $error');
+    });
+  }
 }
-
-// delete 
-
-// update
