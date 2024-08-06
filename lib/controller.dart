@@ -7,8 +7,10 @@ class TodoController {
   final Stream<QuerySnapshot> userStream =
       FirebaseFirestore.instance.collection('todos').snapshots();
 
-  void addUser() {
-    todos.add({'data': titleTEC.text});
+  void addUser(String text) {
+    FirebaseFirestore.instance.collection('todos').add({
+      'data': text,
+    });
     titleTEC.clear();
   }
 
