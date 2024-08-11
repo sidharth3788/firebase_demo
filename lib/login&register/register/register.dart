@@ -1,3 +1,4 @@
+import 'package:firebase_practice/login&register/login/login.dart';
 import 'package:flutter/material.dart';
 import 'register_controller.dart';
 
@@ -40,19 +41,33 @@ class RegisterPage extends StatelessWidget {
                   obscureText: true,
                   validator: (value) => emptyValidation(value: value),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      print(registerController.register);
-                      //Add your action
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Processing Data'),
-                        ),
-                      );
-                    }
-                  },
-                  child: const Text('Register'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginPage()),
+                          );
+                        },
+                        child: const Text('Already have an accout? sign in')),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          print(registerController.register);
+                          //Add your action
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Processing Data'),
+                            ),
+                          );
+                        }
+                      },
+                      child: const Text('Register'),
+                    ),
+                  ],
                 ),
               ],
             )),

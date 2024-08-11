@@ -1,10 +1,10 @@
+import 'package:firebase_practice/login&register/register/register.dart';
 import 'package:flutter/material.dart';
 import 'login_controller.dart';
 
 class LoginPage extends StatelessWidget {
   final LoginController loginController = LoginController();
   LoginPage({super.key});
-  // Key for Form validation
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -32,19 +32,34 @@ class LoginPage extends StatelessWidget {
                   obscureText: true,
                   validator: (value) => emptyValidation(value: value),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      print(loginController.login);
-                      //Add your action
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Processing Data'),
-                        ),
-                      );
-                    }
-                  },
-                  child: const Text('Sign in'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => RegisterPage()),
+                        );
+                      },
+                      child: Text('Create Account'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          print(loginController.login);
+                          //Add your action
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Processing Data'),
+                            ),
+                          );
+                        }
+                      },
+                      child: const Text('Sign in'),
+                    ),
+                  ],
                 ),
               ],
             )),
