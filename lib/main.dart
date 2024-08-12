@@ -1,4 +1,3 @@
-import 'package:firebase_practice/login&register/login/login.dart';
 import 'package:firebase_practice/login&register/register/register.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';

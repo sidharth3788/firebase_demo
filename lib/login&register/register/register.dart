@@ -6,7 +6,7 @@ class RegistrationPage extends StatelessWidget {
   RegistrationPage({super.key});
 
   final _formKey = GlobalKey<FormState>();
-  RegistratioPageController controller = RegistratioPageController();
+  final RegistratioPageController controller = RegistratioPageController();
 
   @override
   Widget build(BuildContext context) {
